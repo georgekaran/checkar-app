@@ -1,0 +1,9 @@
+{
+    "app_name": "Checkar",
+    "label_login": "Login",
+    "label_password": "Senha",
+    "label_signin": "Entrar",
+    "label_forgot_password": "Esqueceu sua senha?",
+    "label_dont_have_account": "Não possui uma conta? Cadastre-se",
+    "label_remeber_me": "Lembrar-me"
+}
