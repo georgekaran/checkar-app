@@ -1,10 +1,10 @@
-const request = require('supertest')
-const app = require('../src/server');
+const request = require('supertest');
+const server = require('../src/server');
 
-let server;
+let app;
 
 beforeEach((done) => {
-  server = app.listen(5001, (err) => {
+  app = server.listen(5001, (err) => {
     if (err) return done(err);
     console.log('Server test running');
     done();
@@ -13,13 +13,12 @@ beforeEach((done) => {
 
 describe('Sample test endpoints', () => {
   it('should make a get request', async (done) => {
-    const res = await request(server)
+      request(app)
       .get('/api/test')
-    expect(res.statusCode).toEqual(200);
+      .expect(200, done);
   })
-})
-
+});
 
 afterEach((done) => {
-  return server && server.close(done);
+  return app && app.close(done);
 });
