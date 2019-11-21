@@ -9,14 +9,25 @@ import Login from '../pages/Login';
 
 const isAuth = false;
 
+const testComponent = () => (<div>HOME</div>);
+
 const Router = () => {
     return (
         <Provider store={store}>
                 <BrowserRouter>
                     <Switch>
                         {isAuth ? (
-                            <CustomRoute exact path="/" component={Home}
-                            isAuth={false} isPrivate={false} />
+                           <Route
+                            path="/"
+                            component={Home}
+                            render={({ match: { url } }) => (
+                                <>
+                                <Route path={`${url}/`} component={testComponent} exact />
+                                <Route path={`${url}/home`} component={testComponent} />
+                                <Route path={`${url}/users`} component={testComponent} />
+                                </>
+                            )}
+                            />
                         ) : (
                         <CustomRoute exact path="/" component={Login}
                             isAuth={false} isPrivate={false} />
