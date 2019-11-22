@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Back-end app for vehicles inspections",
   "scripts": {
-    "server": "npm i && nodemon src/index.js",
+    "server": "nodemon src/index.js",
     "test": "cross-env NODE_ENV=test jest --testTimeout=10000 --detectOpenHandles"
   },
   "repository": {
@@ -25,10 +25,9 @@
   },
   "homepage": "https://github.com/georgekaran/checkar-app#readme",
   "dependencies": {
-    "bcrypt": "^3.0.6",
+    "bcrypt": "^3.0.7",
     "body-parser": "^1.19.0",
     "cookie-parser": "^1.4.4",
-    "crypto": "^1.0.1",
     "db-migrate": "^0.11.6",
     "db-migrate-pg": "^1.0.0",
     "dotenv": "^8.2.0",
@@ -36,7 +35,7 @@
     "express-async-handler": "^1.1.4",
     "jsonwebtoken": "^8.5.1",
     "nodemon": "^1.19.4",
-    "pg": "^7.12.1"
+    "pg": "^7.14.0"
   },
   "devDependencies": {
     "cross-env": "^6.0.3",
