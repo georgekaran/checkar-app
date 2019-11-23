@@ -6,12 +6,12 @@ class UserController {
         this.userService = new UserService();
     }
 
-    // createHelper(req, res){
-    //     const user = {"empresa_id": 1, "tipo_usuario_id": 1, "nome": "Guilherme", "senha": "123", "email": "guilherme@getnada.com"};
-    //     this.userService.create(user, (props) => {
-    //         res.status(201).send({message: `User ${user.nome} has been created!`});
-    //     });
-    // }
+    createHelper(req, res){
+        const user = {"empresa_id": 1, "tipo_usuario_id": 1, "nome": "Guilherme", "senha": "123", "email": "guilherme@getnada.com"};
+        this.userService.create(user, (props) => {
+            res.status(201).send({message: `User ${user.nome} has been created!`});
+        });
+    }
 
     create(req, res) {
         const user = req.body;

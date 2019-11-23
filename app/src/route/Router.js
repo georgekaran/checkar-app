@@ -7,7 +7,7 @@ import CustomRoute from './CustomRoute';
 import Home from '../pages/Home';
 import Login from '../pages/Login';
 
-const isAuth = true;
+const isAuth = false;
 
 const Router = () => {
     return (

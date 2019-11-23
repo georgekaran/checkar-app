@@ -5,7 +5,7 @@ const AuthDAO = require('./authDAO');
 function validateLogin(credentials, user, res) {
     if (!!user && Security.compareEncryptPassword({
         encryptPassword: user.senha,
-        password: credentials.senha
+        password: credentials.password
     })) {
         res.cookie(Security.jwt_name, Security.generateJWT(user), {httpOnly: true});
         delete user.senha;

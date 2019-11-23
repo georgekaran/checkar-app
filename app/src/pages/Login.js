@@ -14,6 +14,8 @@ import ContextEnhancer from '../ContextEnhancer';
 import useForm, { FormContext } from "react-hook-form"
 import TextFieldRegister from '../components/input/TextFieldRegister';
 
+import Api from '../service/Api';
+
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
@@ -54,7 +56,11 @@ const useStyles = makeStyles(theme => ({
 
 const SignIn = ({ message }) => {
   const methods = useForm();
-  const onSubmit = data => { console.log(data) }  
+  const onSubmit = async (data) => { 
+    console.log(data);
+    const aaa = await Api.Auth.login(data);
+    console.log(aaa);
+  }  
   const classes = useStyles();
 
   return (
