@@ -10,7 +10,7 @@ import db.DatabaseConnection;
 import model.Usuario;
 
 public class UserDAO implements IDAO_T<Usuario> {
-    private String tabela = "Usuario";
+    private String tabela = "usuario";
 
     @Override
     public String save(Usuario o) {
@@ -47,7 +47,7 @@ public class UserDAO implements IDAO_T<Usuario> {
         Cursor cur = null;
         SQLiteDatabase db = DatabaseConnection.getInstance(context).getConnection();
 
-        cur = db.query(this.tabela, new String[]{"id_usuario", "nome", "email"}, "email = '" + email + "' and senha = '" + password + "'", null, null, null, null);
+        cur = db.query(this.tabela, new String[]{"id", "nome", "email"}, "email = '" + email + "' and senha = '" + password + "'", null, null, null, null);
 
         if(cur!=null){
             if (cur.moveToFirst()) {

@@ -10,11 +10,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".Vistoria"
-            android:label="@string/title_activity_vistoria"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:name=".VistoriaCarro"
+            android:label="@string/title_activity_vistoria_carro"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".Menu"
+            android:name=".MenuPrincipal"
             android:label="@string/title_activity_menu"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".MainActivity">

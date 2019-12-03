@@ -58,7 +58,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                 Toast toast = Toast.makeText(this, "Verifique as informações do usuário!", Toast.LENGTH_LONG);
                 toast.show();
 
-                Intent intent= new Intent(Login.this, Menu.class);
+                Intent intent= new Intent(Login.this, MenuPrincipal.class);
                 intent.setAction(Intent.ACTION_VIEW); // opcional
                 startActivity(intent);
             }
