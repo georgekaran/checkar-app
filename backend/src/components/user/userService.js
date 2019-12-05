@@ -1,4 +1,4 @@
-const bcrypt = require('bcrypt');
+const Security = require('../auth/security');
 const BasicService = require('../../crud/baseService');
 const UserDAO = require('./userDAO');
 
@@ -8,14 +8,10 @@ class UserService extends BasicService {
         super(UserDAO)
     };
 
-    static encrypt(string) {
-        return bcrypt.hashSync(string, 10);
-    }
-
     beforePersist(object) {
         let user = object;
         if(!!object.senha) {
-            user.senha = UserService.encrypt(object.senha);
+            user.senha = Security.encrypt(object.senha);
         }
         return super.beforePersist(user);
     }
