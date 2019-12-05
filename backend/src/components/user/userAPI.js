@@ -5,7 +5,7 @@ const userTypeAPI = require('./type/userTypeAPI');
 const controller = new UserController();
 const router = buildBaseAPI(controller);
 
-router.get('/create', (req, res) => {
+router.get('/:id/create', (req, res) => {
     controller.createHelper(req, res);
 });
 

@@ -39,4 +39,5 @@ module.exports = {
     jwt_name,
     generateJWT,
     compareEncryptPassword,
+    encrypt,
 };
