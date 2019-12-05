@@ -11,7 +11,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.checkar.R;
-import com.example.checkar.VistoriaCarro;
+import com.example.checkar.VistoriaActivity;
 
 public class FragmentDados extends Fragment {
     private EditText etPlaca = null;
@@ -31,18 +31,18 @@ public class FragmentDados extends Fragment {
         etPlaca = (EditText) view.findViewById(R.id.et_placa);
         etModelo = (EditText) view.findViewById(R.id.et_modelo);
         etMarca = (EditText) view.findViewById(R.id.et_marca);
-        etData = (EditText) view.findViewById(R.id.et_data);
+        etData = (EditText) view.findViewById(R.id.tv_data_vistoria);
         etHora = (EditText) view.findViewById(R.id.et_hora);
         etkmVeiculo = (EditText) view.findViewById(R.id.et_km_veiculo);
         etObservacoes = (EditText) view.findViewById(R.id.et_observacoes);
 
-        etPlaca.setText(VistoriaCarro.vistoria.getVeiculo().getPlaca());
-        etModelo.setText(VistoriaCarro.vistoria.getVeiculo().getModelo());
-        etMarca.setText(VistoriaCarro.vistoria.getVeiculo().getMarca());
-        etData.setText(VistoriaCarro.vistoria.getData());
-        etHora.setText(VistoriaCarro.vistoria.getHora());
-        etkmVeiculo.setText(VistoriaCarro.vistoria.getKm()+"");
-        etObservacoes.setText(VistoriaCarro.vistoria.getObservacao());
+        etPlaca.setText(VistoriaActivity.vistoria.getVeiculo().getPlaca());
+        etModelo.setText(VistoriaActivity.vistoria.getVeiculo().getModelo());
+        etMarca.setText(VistoriaActivity.vistoria.getVeiculo().getMarca());
+        etData.setText(VistoriaActivity.vistoria.getData());
+        etHora.setText(VistoriaActivity.vistoria.getHora());
+        etkmVeiculo.setText(VistoriaActivity.vistoria.getKm()+"");
+        etObservacoes.setText(VistoriaActivity.vistoria.getObservacao());
 
         return view;
     }

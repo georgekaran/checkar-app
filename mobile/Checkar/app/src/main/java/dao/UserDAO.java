@@ -1,5 +1,6 @@
 package dao;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -12,35 +13,6 @@ import model.Usuario;
 public class UserDAO implements IDAO_T<Usuario> {
     private String tabela = "usuario";
 
-    @Override
-    public String save(Usuario o) {
-        return null;
-    }
-
-    @Override
-    public String update(Usuario o) {
-        return null;
-    }
-
-    @Override
-    public String delete(int id) {
-        return null;
-    }
-
-    @Override
-    public ArrayList<Usuario> selectAll() {
-        return null;
-    }
-
-    @Override
-    public ArrayList<Usuario> select(String criterio) {
-        return null;
-    }
-
-    @Override
-    public Usuario selectId(int id) {
-        return null;
-    }
 
     public Usuario login(Context context, String email, String password){
         Usuario user = null;
@@ -59,5 +31,44 @@ public class UserDAO implements IDAO_T<Usuario> {
         }
 
         return user;
+    }
+
+    @Override
+    public String save(Usuario o, Context context) {
+        SQLiteDatabase db = DatabaseConnection.getInstance(context).getConnection();
+        ContentValues values = new ContentValues();
+        values.put("id", o.getId());
+        values.put("empresa_id", o.getId());
+        values.put("tipo_usuario_id", o.getIdTipoUsuario());
+        values.put("nome", o.getNome());
+        values.put("senha", o.getSenha());
+        values.put("email", o.getEmail());
+        long Id = db.insert(this.tabela,null, values);
+        return Id + "";
+    }
+
+    @Override
+    public String update(Usuario o, Context context) {
+        return null;
+    }
+
+    @Override
+    public String delete(int id, Context context) {
+        return null;
+    }
+
+    @Override
+    public ArrayList<Usuario> selectAll(Context context) {
+        return null;
+    }
+
+    @Override
+    public ArrayList<Usuario> select(String criterio, Context context) {
+        return null;
+    }
+
+    @Override
+    public Usuario selectId(int id, Context context) {
+        return null;
     }
 }

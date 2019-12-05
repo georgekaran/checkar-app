@@ -28,4 +28,11 @@
     <string name="hora">Hora:</string>
     <string name="km_veiculo">Quilometragem do veículo:</string>
     <string name="observacoes">Observações:</string>
+    <string name="veiculo_padrao">Veículo padrão:</string>
+
+    <string name="preference_file_key">com.example.checkar.PREFERENCE_FILE_KEY</string>
+    <string name="config_lembrar">Lembrar</string>
+    <string name="config_email">Email</string>
+    <string name="config_senha">Senha</string>
+    <string name="config_veiculo">Veiculo</string>
 </resources>

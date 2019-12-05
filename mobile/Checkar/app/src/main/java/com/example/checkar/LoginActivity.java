@@ -11,9 +11,10 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import dao.UserDAO;
+import model.Configuracao;
 import model.Usuario;
 
-public class Login extends AppCompatActivity implements View.OnClickListener {
+public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
     EditText etEmail = null;
     EditText etSenha = null;
     Button btEntrar = null;
@@ -30,6 +31,16 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         cbLembrar = (CheckBox) findViewById(R.id.cb_lembrar_me);
 
         btEntrar.setOnClickListener(this);
+
+        if (Configuracao.configGerais.lerConfig(getString(R.string.config_lembrar)).equals("T")){
+            cbLembrar.setChecked(true);
+            etEmail.setText(Configuracao.configGerais.lerConfig(getString(R.string.config_email)));
+            etSenha.setText(Configuracao.configGerais.lerConfig(getString(R.string.config_senha)));
+        } else {
+            cbLembrar.setChecked(false);
+            etEmail.setText("");
+            etSenha.setText("");
+        }
     }
 
     @Override
@@ -58,7 +69,13 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                 Toast toast = Toast.makeText(this, "Verifique as informações do usuário!", Toast.LENGTH_LONG);
                 toast.show();
 
-                Intent intent= new Intent(Login.this, MenuPrincipal.class);
+                if (cbLembrar.isChecked()){
+                    Configuracao.configGerais.salvarConfig(getString(R.string.config_email), etEmail.getText().toString());
+                    Configuracao.configGerais.salvarConfig(getString(R.string.config_senha), etSenha.getText().toString());
+                    Configuracao.configGerais.salvarConfig(getString(R.string.config_lembrar), cbLembrar.isChecked()?"T":"F");
+                }
+
+                Intent intent= new Intent(LoginActivity.this, MenuActivity.class);
                 intent.setAction(Intent.ACTION_VIEW); // opcional
                 startActivity(intent);
             }

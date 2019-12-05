@@ -1,13 +1,14 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.example.checkar.MenuPrincipal">
+    tools:context="com.example.checkar.MenuActivity">
     <item
-        android:id="@+id/action_settings"
+        android:id="@+id/acao_configuracao"
         android:orderInCategory="100"
         android:title="@string/configuracao"
         app:showAsAction="never" />
     <item
+        android:id="@+id/acao_sincronizar"
         android:title="@string/sincronizar"
         app:showAsAction="never"/>
 </menu>
