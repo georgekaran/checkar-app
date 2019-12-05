@@ -7,7 +7,7 @@ class DAO {
             text: `SELECT ${fields.join(', ')} FROM ${table} ${getParams(params)} ${additionalQuery}`,
             values: Object.values(params)
         };
-        db.executeQuery(query, (result) => cb(result[0]));
+        db.executeQuery(query, (result) => cb(result && result[0]));
     }
 
     static selectMany({table = '', fields = ['*'], join = "", params = {}, additionalQuery = ''}, cb) {
@@ -23,7 +23,7 @@ class DAO {
             text: `INSERT INTO ${table} ${join(getFields(values))} VALUES ${getInsertValues(values)}`,
             values: Object.values(values)
         };
-        db.executeQuery(query, (result) => cb(result[0]));
+        db.executeQuery(query, (result) => cb(result && result[0]));
     }
 
     static update({table = '', values = {}, params = {}}, cb) {
@@ -32,7 +32,7 @@ class DAO {
             text: `UPDATE ${table} SET ${getUpdateValues(values)} ${getParams(params, numberParams)}`,
             values: Object.values(values).concat(Object.values(params))
         };
-        db.executeQuery(query, (result) => cb(result[0]));
+        db.executeQuery(query, (result) => cb(result && result[0]));
     }
 
     static delete({table = '', params = {}}, cb) {
@@ -40,7 +40,7 @@ class DAO {
             text: `DELETE FROM ${table} ${getParams(params)}`,
             values: Object.values(params)
         };
-        db.executeQuery(query, (result) => cb(result[0]));
+        db.executeQuery(query, (result) => cb(result && result[0]));
     }
 
     static custom({sql = '', values = []}, cb){

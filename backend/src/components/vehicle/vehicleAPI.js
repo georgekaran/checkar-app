@@ -1,13 +1,12 @@
-const express = require('express');
-const router = express.Router();
+const VehicleController = require('./vehicleController');
 const vehicleTypeAPI = require('./type/vehicleTypeAPI');
 const vehicleItemAPI = require('./item/vehicleItemAPI');
+const buildBaseAPI = require('../../crud/baseAPI');
 
-router.get('/', function(req, res, next) {
-    res.status(200).send({message: "Vehicle API"});
-});
+const controller = new VehicleController();
+const router = buildBaseAPI(controller);
 
-router.use('/type', vehicleTypeAPI);
-router.use('/item', vehicleItemAPI);
+router.use('/:id/type', vehicleTypeAPI);
+router.use('/:id/item', vehicleItemAPI);
 
 module.exports = router;

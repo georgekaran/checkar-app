@@ -1,8 +1,10 @@
-const express = require('express');
-const router = express.Router();
+const InspectionController = require('./inspectionController');
+const inspectionItemAPI = require('./item/inspectionItemAPI');
+const buildBaseAPI = require('../../crud/baseAPI');
 
-router.get('/', function(req, res, next) {
-    res.status(200).send({message: "Inspection API"});
-});
+const controller = new InspectionController();
+const router = buildBaseAPI(controller);
+
+router.use('/:id/item', inspectionItemAPI);
 
 module.exports = router;
