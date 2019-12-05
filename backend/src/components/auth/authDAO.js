@@ -1,5 +1,5 @@
 const dao = require('../../database/dao');
-const BasicDAO = require('../../database/basicDAO');
+const BasicDAO = require('../../crud/basicDAO');
 
 class AuthDAO extends BasicDAO {
 

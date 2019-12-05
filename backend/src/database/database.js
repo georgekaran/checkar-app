@@ -14,7 +14,8 @@ const executeQuery = (query, cb) => {
     pool.query(query, (error, results) => {
         if (error) {
             console.log(error);
-            throw error
+            cb(null);
+            return;
         }
         cb(results.rows);
     })

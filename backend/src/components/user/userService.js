@@ -1,42 +1,27 @@
 const bcrypt = require('bcrypt');
+const BasicService = require('../../crud/baseService');
 const UserDAO = require('./userDAO');
 
-class UserService {
+class UserService extends BasicService {
 
     constructor(props){
-        this.userDAO = new UserDAO();
+        super(UserDAO)
     };
 
     static encrypt(string) {
         return bcrypt.hashSync(string, 10);
     }
 
-    getById(id, cb) {
-        this.userDAO.getById({params: {id}, fields: ['id', 'nome', 'email']}, cb);
-    };
-
-    create(values, cb) {
-        let user = values;
-        user.senha = UserService.encrypt(values.senha);
-        return this.userDAO.insert({values: user}, cb);
-    }
-
-    delete(id, cb) {
-        const params = {id};
-        return this.userDAO.delete({params}, cb);
-    }
-
-    update(id, values, cb) {
-        const params = {id};
-        let user = values;
-        if(!!values.senha) {
-            user.senha = UserService.encrypt(values.senha);
+    beforePersist(object) {
+        let user = object;
+        if(!!object.senha) {
+            user.senha = UserService.encrypt(object.senha);
         }
-        return this.userDAO.update({values: user, params}, cb);
+        return super.beforePersist(user);
     }
 
-    getAll(cb) {
-        return this.userDAO.getAll({fields: ['id', 'nome', 'email']}, cb);
+    fields() {
+        return ['id', 'nome', 'email'];
     }
 }
 

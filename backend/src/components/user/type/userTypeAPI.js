@@ -1,8 +1,7 @@
-const express = require('express');
-const router = express.Router();
+const UserTypeController = require('./userTypeController');
+const buildBaseAPI = require('../../../crud/baseAPI');
 
-router.get('/', function(req, res, next) {
-    res.status(200).send({message: "User Type API"});
-});
+const controller = new UserTypeController();
+const router = buildBaseAPI(controller);
 
 module.exports = router;

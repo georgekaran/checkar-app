@@ -1,8 +1,7 @@
-const express = require('express');
-const router = express.Router();
+const CompanyController = require('./companyController');
+const buildBaseAPI = require('../../crud/baseAPI');
 
-router.get('/', function(req, res, next) {
-    res.status(200).send({message: "Company API"});
-});
+const controller = new CompanyController();
+const router = buildBaseAPI(controller);
 
 module.exports = router;

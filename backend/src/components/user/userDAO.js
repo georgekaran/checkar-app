@@ -1,5 +1,4 @@
-const dao = require('../../database/database');
-const BasicDAO = require('../../database/basicDAO');
+const BasicDAO = require('../../crud/basicDAO');
 
 class UserDAO extends BasicDAO {
 

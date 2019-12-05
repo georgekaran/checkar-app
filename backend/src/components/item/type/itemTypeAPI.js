@@ -1,8 +1,7 @@
-const express = require('express');
-const router = express.Router();
+const ItemTypeController = require('./itemTypeController');
+const buildBaseAPI = require('../../../crud/baseAPI');
 
-router.get('/', function(req, res, next) {
-    res.status(200).send({message: "Item Type API"});
-});
+const controller = new ItemTypeController();
+const router = buildBaseAPI(controller);
 
 module.exports = router;
