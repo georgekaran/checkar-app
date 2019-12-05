@@ -1,8 +1,16 @@
 package model;
 
+import android.app.Application;
+import android.content.Context;
+
+import com.example.checkar.MySuperAppApplication;
+import com.example.checkar.R;
+
 import java.util.ArrayList;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
+import dao.VeiculoDAO;
 
 public class Vistoria {
     private int id;
@@ -57,11 +65,10 @@ public class Vistoria {
         this.observacao = observacao;
     }
 
-    public Vistoria() {
+    public Vistoria(Veiculo veiculo) {
         this.data = new SimpleDateFormat("dd/MM/yyyy").format(new Date());
         this.hora = new SimpleDateFormat("HH:mm").format(new Date());
         this.km = 0;
-
-        this.veiculo = new Veiculo();
+        this.veiculo = veiculo;
     }
 }

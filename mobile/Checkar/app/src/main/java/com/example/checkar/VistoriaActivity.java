@@ -13,10 +13,11 @@ import androidx.viewpager.widget.ViewPager;
 import android.view.View;
 import android.widget.EditText;
 
+import dao.VeiculoDAO;
 import fragmentVistoria.MyFragmentPagerAdapter;
 import model.Vistoria;
 
-public class VistoriaCarro extends AppCompatActivity {
+public class VistoriaActivity extends AppCompatActivity {
     private TabLayout tabLayout;
     private ViewPager viewPager;
     public static Vistoria vistoria;
@@ -34,7 +35,8 @@ public class VistoriaCarro extends AppCompatActivity {
         viewPager.setAdapter(new MyFragmentPagerAdapter(getSupportFragmentManager(), 0, getResources().getStringArray(R.array.titles_tab)));
         tabLayout.setupWithViewPager(viewPager);
 
-        this.vistoria = new Vistoria();
+        int idVeiculo = 1;
+        this.vistoria = new Vistoria(new VeiculoDAO().selectId(idVeiculo, this));
     }
 
 }
