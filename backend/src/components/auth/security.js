@@ -1,5 +1,5 @@
 const Config = require('../../utils/config');
-const bcrypt = require('bcrypt');
+const bcryptjs = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
 const secretKey = 'lansando_a_braba';
@@ -27,11 +27,11 @@ function decodeJWT(token){
 }
 
 function encrypt(string) {
-    return bcrypt.hashSync(string, 10);
+    return bcryptjs.hashSync(string, 10);
 }
 
 function compareEncryptPassword({encryptPassword, password}) {
-    return bcrypt.compareSync(password, encryptPassword);
+    return bcryptjs.compareSync(password, encryptPassword);
 }
 
 module.exports = {
