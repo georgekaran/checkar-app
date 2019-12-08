@@ -10,15 +10,15 @@ const persistConfig = {
     key: 'root',
     storage,
     blacklist: ['user']
-}
+};
 
 const appReducer = combineReducers({
     
-})
+});
 
 const enHanceCreateStore = compose(
     reduxReset(),
-    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+    window.__REDUX_DEVTOOLS_EXTENSION__ ? window.__REDUX_DEVTOOLS_EXTENSION__() : f => f
 )(createStore, applyMiddleware(createSagaMiddleware));
 
 const persistedReducer = persistReducer(persistConfig, appReducer);
