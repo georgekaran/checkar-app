@@ -33,18 +33,18 @@ class BaseController {
 
     getAll(req, res) {
         request(() => {
-            this.service.getAll((userList) => {
-                res.status(200).send(userList);
+            this.service.getAll((list) => {
+                res.status(200).send(list);
             })
         }, res);
     }
 
     update(req, res) {
         const id = req.params.id;
-        const user = req.body;
+        const obj = req.body;
         request(() => {
-            this.service.update(id, user, (user) => {
-                res.status(200).send({message: "Update successfully", user});
+            this.service.update(id, obj, (object) => {
+                res.status(200).send({message: "Update successfully", object});
             })
         }, res);
     }

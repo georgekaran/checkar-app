@@ -1,14 +1,19 @@
+const express = require('express');
+const router = express.Router();
+
 const UserController = require('./userController');
 const buildBaseAPI = require('../../crud/baseAPI');
 const userTypeAPI = require('./type/userTypeAPI');
 
-const controller = new UserController();
-const router = buildBaseAPI(controller);
+//has to call nested routes before to avoid conflicts
+router.use('/type', userTypeAPI);
 
-router.get('/:id/create', (req, res) => {
+const controller = new UserController();
+
+router.get('/create', (req, res) => {
     controller.createHelper(req, res);
 });
 
-router.use('/:id/type', userTypeAPI);
+buildBaseAPI(controller, router);
 
 module.exports = router;

@@ -1,7 +1,10 @@
 const express = require('express');
 
-function buildBaseAPI(controller) {
-    const router = express.Router();
+function buildBaseAPI(controller, router) {
+    if(!router) {
+        router = express.Router();
+    }
+
     router.post('/', (req, res) => {
         controller.create(req, res);
     });

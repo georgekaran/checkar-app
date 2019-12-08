@@ -37,11 +37,11 @@ app.get('/', (req, res) => {
 
 app.use(function (req, res, next) {
   res.status(404).send({message: "Sorry can't find that!"});
-})
+});
 
 app.use(function (err, req, res, next) {
   console.error(err.stack);
   res.status(500).send({error: true, message: "Ops!"});
-})
+});
 
 module.exports = app;

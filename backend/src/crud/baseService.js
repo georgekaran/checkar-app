@@ -9,7 +9,7 @@ class BaseService {
     };
 
     create(values, cb) {
-        const object = this.beforePersist(values);
+        const object = this.beforePersist(values, 'CREATE');
         return this.DAO.insert({values: object}, cb);
     }
 
@@ -20,7 +20,7 @@ class BaseService {
 
     update(id, values, cb) {
         const params = {id};
-        const object = this.beforePersist(values);
+        const object = this.beforePersist(values, 'UPDATE');
         return this.DAO.update({values: object, params}, cb);
     }
 
@@ -28,11 +28,14 @@ class BaseService {
         return this.DAO.getAll({fields: this.fields()}, cb);
     }
 
-    beforePersist(object){
+    beforePersist(object, type = 'SAVE') {
+        if(type === 'UPDATE') {
+            object.updated_at = new Date().toLocaleString('pt-BR', { timeZone: 'America/Belem' });
+        }
         return object;
     }
 
-    fields(){
+    fields() {
         return ["*"];
     }
 }
