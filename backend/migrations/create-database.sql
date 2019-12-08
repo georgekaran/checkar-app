@@ -67,7 +67,7 @@ CREATE TABLE  "tipo_veiculo" (
 -- Table "veiculo"
 -- -----------------------------------------------------
 CREATE TABLE  "veiculo" (
-  "id_veiculo" INT NOT NULL,
+  "id" SERIAL,
   "tipo_veiculo_id" INT NOT NULL,
   "placa" VARCHAR(8) NOT NULL,
   "modelo" VARCHAR(50) NOT NULL,
@@ -78,7 +78,7 @@ CREATE TABLE  "veiculo" (
   "empresa_id" INT NOT NULL,
   "created_at" TIMESTAMP NOT NULL,
   "updated_at" TIMESTAMP NOT NULL,
-  PRIMARY KEY ("id_veiculo"),
+  PRIMARY KEY ("id"),
   CONSTRAINT "fk_veiculo_tipo_veiculo1"
     FOREIGN KEY ("tipo_veiculo_id")
     REFERENCES "tipo_veiculo" ("id")
@@ -134,7 +134,7 @@ CREATE TABLE  "veiculo_item" (
   PRIMARY KEY ("id"),
   CONSTRAINT "fk_veiculo_has_Item_veiculo"
     FOREIGN KEY ("id_veiculo")
-    REFERENCES "veiculo" ("id_veiculo")
+    REFERENCES "veiculo" ("id")
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT "fk_veiculo_has_Item_Item1"
@@ -169,7 +169,7 @@ CREATE TABLE  "vistoria" (
     ON UPDATE NO ACTION,
   CONSTRAINT "fk_Vistoria_Veiculo1"
     FOREIGN KEY ("id_veiculo")
-    REFERENCES "veiculo" ("id_veiculo")
+    REFERENCES "veiculo" ("id")
     ON DELETE NO ACTION
     ON UPDATE NO ACTION
 );
