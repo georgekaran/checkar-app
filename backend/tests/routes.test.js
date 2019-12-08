@@ -6,7 +6,6 @@ let app;
 beforeEach((done) => {
   app = server.listen(5001, (err) => {
     if (err) return done(err);
-    console.log('Server test running');
     done();
   });
 });
@@ -14,7 +13,7 @@ beforeEach((done) => {
 describe('Sample test endpoints', () => {
   it('should make a get request', async (done) => {
       request(app)
-      .get('/test')
+      .get('/')
       .expect(200, done);
   })
 });
