@@ -71,4 +71,10 @@ public class UserDAO implements IDAO_T<Usuario> {
     public Usuario selectId(int id, Context context) {
         return null;
     }
+
+    public String deleteAll(Context context){
+        SQLiteDatabase db = DatabaseConnection.getInstance(context).getConnection();
+        db.delete(this.tabela, null, null);
+        return null;
+    }
 }

@@ -24,6 +24,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        setTitle("Login");
 
         etEmail = (EditText) findViewById(R.id.et_email);
         etSenha = (EditText) findViewById(R.id.et_senha);

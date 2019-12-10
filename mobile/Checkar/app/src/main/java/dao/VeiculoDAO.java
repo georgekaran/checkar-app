@@ -41,6 +41,12 @@ public class VeiculoDAO implements IDAO_T<Veiculo> {
         return null;
     }
 
+    public String deleteAll(Context context){
+        SQLiteDatabase db = DatabaseConnection.getInstance(context).getConnection();
+        db.delete(this.tabela, null, null);
+        return null;
+    }
+
     @Override
     public ArrayList selectAll(Context context) {
         ArrayList<Veiculo> veiculos = new ArrayList();

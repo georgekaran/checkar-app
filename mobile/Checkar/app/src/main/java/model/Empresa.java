@@ -1,9 +1,8 @@
 package model;
 
-public class Item {
+public class Empresa {
     private int id;
     private String nome;
-    private int idTipo;
 
     public int getId() {
         return id;
@@ -19,13 +18,5 @@ public class Item {
 
     public void setNome(String nome) {
         this.nome = nome;
-    }
-
-    public int getIdTipo() {
-        return idTipo;
-    }
-
-    public void setIdTipo(int idTipo) {
-        this.idTipo = idTipo;
     }
 }

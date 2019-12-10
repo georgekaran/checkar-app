@@ -15,6 +15,7 @@ import android.widget.EditText;
 
 import dao.VeiculoDAO;
 import fragmentVistoria.MyFragmentPagerAdapter;
+import model.Configuracao;
 import model.Vistoria;
 
 public class VistoriaActivity extends AppCompatActivity {
@@ -35,7 +36,7 @@ public class VistoriaActivity extends AppCompatActivity {
         viewPager.setAdapter(new MyFragmentPagerAdapter(getSupportFragmentManager(), 0, getResources().getStringArray(R.array.titles_tab)));
         tabLayout.setupWithViewPager(viewPager);
 
-        int idVeiculo = 1;
+        int idVeiculo = Integer.parseInt(Configuracao.configGerais.lerConfig(getString(R.string.config_veiculo)));
         this.vistoria = new Vistoria(new VeiculoDAO().selectId(idVeiculo, this));
     }
 
