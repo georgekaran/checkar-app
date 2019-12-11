@@ -2,6 +2,7 @@ package dao;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import java.util.ArrayList;
@@ -44,7 +45,20 @@ public class TipoItemDAO implements IDAO_T<TipoItem> {
 
     @Override
     public TipoItem selectId(int id, Context context) {
-        return null;
+        TipoItem tipo = new TipoItem();
+        Cursor cur = null;
+        SQLiteDatabase db = DatabaseConnection.getInstance(context).getConnection();
+
+        cur = db.query(this.tabela, new String[]{"id", "tipo_item"}, "id = " + id, null, null, null, null);
+
+        if (cur != null) {
+            if (cur.moveToFirst()) {
+                tipo.setId(cur.getInt(0));
+                tipo.setTipo_item(cur.getString(1));
+            }
+        }
+
+        return tipo;
     }
 
     public String deleteAll(Context context){

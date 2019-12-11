@@ -3,9 +3,9 @@
     package="com.example.checkar">
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-feature android:name="android.hardware.camera" android:required="false" />
 
     <application
         android:allowBackup="true"
@@ -15,7 +15,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ConfigActivity"></activity>
+        <activity android:name=".ItemVistoriaActivity"></activity>
+        <activity android:name=".ConfigActivity" />
         <activity
             android:name=".VistoriaActivity"
             android:label="@string/title_activity_vistoria_carro"
@@ -32,7 +33,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".LoginActivity" />
-        <activity android:name= ".MySuperAppApplication"/>
+        <activity android:name=".MySuperAppApplication" />
     </application>
 
 </manifest>

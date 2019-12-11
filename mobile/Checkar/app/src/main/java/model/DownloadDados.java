@@ -65,6 +65,13 @@ public class DownloadDados extends AsyncTask<Void, Void, String> {
         queue.add(baixarVeiculo());
         queue.add(baixarTipoItem());
         queue.add(baixarItem());
+
+        new VeiculoDAO().saveItemVeiculo(1,1,1, this.context);
+        new VeiculoDAO().saveItemVeiculo(2,2,1, this.context);
+        new VeiculoDAO().saveItemVeiculo(3,3,1, this.context);
+        new VeiculoDAO().saveItemVeiculo(4,4,1, this.context);
+        new VeiculoDAO().saveItemVeiculo(5,5,1, this.context);
+        new VeiculoDAO().saveItemVeiculo(6,6,1, this.context);
         return null;
     }
 

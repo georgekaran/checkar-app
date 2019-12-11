@@ -35,4 +35,11 @@
     <string name="config_email">Email</string>
     <string name="config_senha">Senha</string>
     <string name="config_veiculo">Veiculo</string>
+    <string name="desc_item">Descrição do item:</string>
+    <string name="tipo_item">Tipo do item:</string>
+    <string name="situacao">Situação:</string>
+    <string name="sem_problemas">Sem problemas</string>
+    <string name="com_problemas">Com problemas</string>
+    <string name="tirar_foto">Foto:</string>
+    <string name="salvar">Salvar</string>
 </resources>

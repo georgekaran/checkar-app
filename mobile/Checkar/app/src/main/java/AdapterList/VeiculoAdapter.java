@@ -4,7 +4,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -59,8 +58,8 @@ public class VeiculoAdapter extends RecyclerView.Adapter<VeiculoAdapter.VeiculoV
 
         VeiculoViewHolder(View itemView, OnVeiculoListner onVeiculoListner) {
             super(itemView);
-            nomeView = (TextView)itemView.findViewById(R.id.tv_placa_item);
-            idadeView = (TextView)itemView.findViewById(R.id.tv_marca_modelo_item);
+            nomeView = (TextView)itemView.findViewById(R.id.tv_descricao_item_vist);
+            idadeView = (TextView)itemView.findViewById(R.id.tv_tipo_item_vist);
             checkView = (CheckBox)itemView.findViewById(R.id.cb_veiculo_item);
             this.onVeiculoListner = onVeiculoListner;
 

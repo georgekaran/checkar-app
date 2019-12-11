@@ -1,5 +1,6 @@
 package com.example.checkar;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -13,22 +14,29 @@ import androidx.viewpager.widget.ViewPager;
 import android.view.View;
 import android.widget.EditText;
 
+import java.util.ArrayList;
+
+import AdapterList.ItemAdapter;
+import AdapterList.ItemAdapter.OnItemVistoriaListner;
 import dao.VeiculoDAO;
 import fragmentVistoria.MyFragmentPagerAdapter;
 import model.Configuracao;
+import model.ItemVistoria;
+import model.Veiculo;
 import model.Vistoria;
 
-public class VistoriaActivity extends AppCompatActivity {
+public class VistoriaActivity extends AppCompatActivity  {
     private TabLayout tabLayout;
     private ViewPager viewPager;
     public static Vistoria vistoria;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)  {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vistoria_carro);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        setTitle("Vistoria");
 
         tabLayout = (TabLayout) findViewById(R.id.tab_layout);
         viewPager = (ViewPager) findViewById(R.id.view_pager);
@@ -37,7 +45,11 @@ public class VistoriaActivity extends AppCompatActivity {
         tabLayout.setupWithViewPager(viewPager);
 
         int idVeiculo = Integer.parseInt(Configuracao.configGerais.lerConfig(getString(R.string.config_veiculo)));
-        this.vistoria = new Vistoria(new VeiculoDAO().selectId(idVeiculo, this));
+
+        VeiculoDAO veiculoDAO = new VeiculoDAO();
+        Veiculo veiculo = veiculoDAO.selectId(idVeiculo, this);
+        ArrayList<ItemVistoria> itensVistoria = veiculoDAO.selectItensVeiculo(idVeiculo, this);
+        this.vistoria = new Vistoria(veiculo, itensVistoria);
     }
 
 }

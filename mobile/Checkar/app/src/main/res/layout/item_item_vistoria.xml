@@ -22,10 +22,8 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginLeft="16dp"
                 android:layout_marginTop="5dp"
-                android:layout_marginEnd="16dp"
-                android:layout_marginRight="16dp"
                 android:text="TextView"
-                app:layout_constraintEnd_toStartOf="@+id/cb_veiculo_item"
+                app:layout_constraintEnd_toStartOf="@+id/im_situacao_item_vist"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tv_descricao_item_vist" />
 
@@ -36,23 +34,28 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginLeft="16dp"
                 android:layout_marginTop="5dp"
-                android:layout_marginEnd="16dp"
-                android:layout_marginRight="16dp"
                 android:text="TextView"
                 android:textStyle="bold"
-                app:layout_constraintEnd_toStartOf="@+id/cb_veiculo_item"
-                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintEnd_toStartOf="@+id/im_situacao_item_vist"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <CheckBox
-                android:id="@+id/cb_veiculo_item"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:clickable="false"
+            <ImageView
+                android:id="@+id/im_situacao_item_vist"
+                android:layout_width="50dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="1dp"
+                android:layout_marginLeft="1dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginBottom="5dp"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintStart_toEndOf="@+id/tv_tipo_item_vist"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@mipmap/ic_launcher" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.cardview.widget.CardView>
