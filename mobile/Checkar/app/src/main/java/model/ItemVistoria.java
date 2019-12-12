@@ -2,6 +2,7 @@ package model;
 
 public class ItemVistoria {
     private int id;
+    private int id_item_veiculo;
     private Item item;
     private String situacao;
     private String observacao;
@@ -9,6 +10,14 @@ public class ItemVistoria {
 
     public int getId() {
         return id;
+    }
+
+    public int getId_item_veiculo() {
+        return id_item_veiculo;
+    }
+
+    public void setId_item_veiculo(int id_item_veiculo) {
+        this.id_item_veiculo = id_item_veiculo;
     }
 
     public void setId(int id) {

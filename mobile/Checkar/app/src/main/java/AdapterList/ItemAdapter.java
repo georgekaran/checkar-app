@@ -37,11 +37,13 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
         holder.descricaoView.setText(this.itens.get(position).getItem().getNome());
         holder.tipoView.setText(this.itens.get(position).getItem().getNomeTipo());
 
-        /*if( itens){
-            holder.checkView.setChecked(true);
+        if(this.itens.get(position).getSituacao().equals("S")){
+            holder.imageView.setImageResource(R.drawable.ok);
+        } else if(this.itens.get(position).getSituacao().equals("C")) {
+            holder.imageView.setImageResource(R.drawable.alerta);
         } else {
-            holder.checkView.setChecked(false);
-        }*/
+            holder.imageView.setImageResource(R.drawable.vazio);
+        }
     }
 
     @Override
@@ -58,8 +60,8 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
 
         ItemViewHolder(View itemView, OnItemVistoriaListner onItemVistoriaListner) {
             super(itemView);
-            descricaoView = (TextView) itemView.findViewById(R.id.tv_descricao_item_vist);
-            tipoView = (TextView) itemView.findViewById(R.id.tv_tipo_item_vist);
+            descricaoView = (TextView) itemView.findViewById(R.id.tv_data_vist_item);
+            tipoView = (TextView) itemView.findViewById(R.id.tv_situacao_vist_item);
             imageView = (ImageView) itemView.findViewById(R.id.im_situacao_item_vist);
             this.onItemVistoriaListner = onItemVistoriaListner;
 

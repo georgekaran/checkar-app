@@ -1,6 +1,8 @@
 package fragmentVistoria;
 
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,7 +36,6 @@ public class FragmentDados extends Fragment {
         etData = (EditText) view.findViewById(R.id.tv_data_vistoria);
         etHora = (EditText) view.findViewById(R.id.et_hora);
         etkmVeiculo = (EditText) view.findViewById(R.id.et_km_veiculo);
-        etObservacoes = (EditText) view.findViewById(R.id.et_observacoes);
 
         etPlaca.setText(VistoriaActivity.vistoria.getVeiculo().getPlaca());
         etModelo.setText(VistoriaActivity.vistoria.getVeiculo().getModelo());
@@ -42,7 +43,23 @@ public class FragmentDados extends Fragment {
         etData.setText(VistoriaActivity.vistoria.getData());
         etHora.setText(VistoriaActivity.vistoria.getHora());
         etkmVeiculo.setText(VistoriaActivity.vistoria.getKm()+"");
-        etObservacoes.setText(VistoriaActivity.vistoria.getObservacao());
+
+        etkmVeiculo.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                VistoriaActivity.vistoria.setKm(Integer.parseInt(s.toString()));
+            }
+        });
 
         return view;
     }

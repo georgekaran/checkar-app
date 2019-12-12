@@ -7,7 +7,7 @@
     android:padding="5dp">
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/cv_item_veiculo"
+        android:id="@+id/cv_item_vistoria"
         android:layout_width="match_parent"
         android:layout_height="55dp">
 
@@ -16,7 +16,7 @@
             android:layout_height="match_parent">
 
             <TextView
-                android:id="@+id/tv_tipo_item_vist"
+                android:id="@+id/tv_situacao_vist_item"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
@@ -27,10 +27,10 @@
                 android:text="TextView"
                 app:layout_constraintEnd_toStartOf="@+id/cb_veiculo_item"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tv_descricao_item_vist" />
+                app:layout_constraintTop_toBottomOf="@+id/tv_data_vist_item" />
 
             <TextView
-                android:id="@+id/tv_descricao_item_vist"
+                android:id="@+id/tv_data_vist_item"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"

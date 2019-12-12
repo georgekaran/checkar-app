@@ -1,5 +1,6 @@
 package com.example.checkar;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -19,15 +20,23 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
 import AdapterList.VeiculoAdapter;
 import AdapterList.VistoriaAdapter;
 import dao.VeiculoDAO;
 import dao.VistoriaDAO;
 import model.Configuracao;
 import model.DownloadDados;
+import model.ItemVistoria;
+import model.Veiculo;
 import model.Vistoria;
 
-public class MenuActivity extends AppCompatActivity {
+public class MenuActivity extends AppCompatActivity implements VistoriaAdapter.OnVistoriaListner {
+    private static RecyclerView rv = null;
+    private static VistoriaAdapter vistoriaAdapter = null;
+    private static ArrayList<Vistoria> vistorias = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,6 +45,15 @@ public class MenuActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        rv = (RecyclerView) findViewById(R.id.rv_vistorias);
+        rv.setLayoutManager(new LinearLayoutManager(this));
+        rv.setHasFixedSize(true);
+        vistorias = new VistoriaDAO().selectAll(this);
+        vistoriaAdapter = new VistoriaAdapter(vistorias, this);
+
+        LinearLayoutManager llm = new LinearLayoutManager(this);
+        llm.setOrientation(LinearLayoutManager.VERTICAL);
+        rv.setLayoutManager(llm);
 
         FloatingActionButton btNovaVistoria = (FloatingActionButton) findViewById(R.id.bt_nova_vistoria);
         btNovaVistoria.setOnClickListener(new View.OnClickListener() {
@@ -44,6 +62,13 @@ public class MenuActivity extends AppCompatActivity {
                 if(Configuracao.configGerais.lerConfig(getString(R.string.config_veiculo)).equals("")){
                     AlertarConfgVeiculo();
                 } else {
+                    int idVeiculo = Integer.parseInt(Configuracao.configGerais.lerConfig(getString(R.string.config_veiculo)));
+
+                    VeiculoDAO veiculoDAO = new VeiculoDAO();
+                    Veiculo veiculo = veiculoDAO.selectId(idVeiculo, getApplicationContext());
+                    ArrayList<ItemVistoria> itensVistoria = veiculoDAO.selectItensVeiculo(idVeiculo, getApplicationContext());
+                    VistoriaActivity.vistoria = new Vistoria(veiculo, itensVistoria);
+
                     Intent intent = new Intent(MenuActivity.this, VistoriaActivity.class);
                     intent.setAction(Intent.ACTION_VIEW); // opcional
                     startActivity(intent);
@@ -51,21 +76,15 @@ public class MenuActivity extends AppCompatActivity {
             }
         });
 
-        listarVistoriasRealizadas();
+        listarVistoriasRealizadas(this);
     }
 
-    public void listarVistoriasRealizadas(){
-        RecyclerView rv = (RecyclerView) findViewById(R.id.rv_vistorias);
-
-        rv.setLayoutManager(new LinearLayoutManager(this));
-        rv.setHasFixedSize(true);
-
-        LinearLayoutManager llm = new LinearLayoutManager(this);
-        llm.setOrientation(LinearLayoutManager.VERTICAL);
-        rv.setLayoutManager(llm);
-
-        /*VistoriaAdapter vistoriaAdapter = new VistoriaAdapter(new VistoriaDAO().selectAll(this));
-        rv.setAdapter(vistoriaAdapter);*/
+    public static void listarVistoriasRealizadas(Context context){
+        vistorias = new VistoriaDAO().selectAll(context);
+        vistoriaAdapter.setVistorias(vistorias);
+        rv.setAdapter(vistoriaAdapter);
+        rv.refreshDrawableState();
+        vistoriaAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -101,5 +120,13 @@ public class MenuActivity extends AppCompatActivity {
         builder.setPositiveButton("OK", null);        // create and show the alert dialog
         AlertDialog dialog = builder.create();
         dialog.show();
+    }
+
+    @Override
+    public void onVistoriaClick(int position) {
+        VistoriaActivity.vistoria = this.vistorias.get(position);
+        Intent intent = new Intent(MenuActivity.this, VistoriaActivity.class);
+        intent.setAction(Intent.ACTION_VIEW); // opcional
+        startActivity(intent);
     }
 }

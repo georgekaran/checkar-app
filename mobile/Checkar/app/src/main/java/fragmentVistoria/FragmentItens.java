@@ -1,6 +1,7 @@
 package fragmentVistoria;
 
 import android.app.Application;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -24,8 +25,8 @@ import model.ItemVistoria;
 
 public class FragmentItens extends Fragment implements ItemAdapter.OnItemVistoriaListner {
     List<ItemVistoria> itens = null;
-    RecyclerView recyclerView;
-    ItemAdapter itemAdapter;
+    public static RecyclerView recyclerView;
+    public static ItemAdapter itemAdapter;
     View view;
 
     @Nullable
@@ -55,5 +56,10 @@ public class FragmentItens extends Fragment implements ItemAdapter.OnItemVistori
         ItemVistoriaActivity.item = VistoriaActivity.vistoria.getItensVistoria().get(position);
         Intent it = new Intent(view.getContext(), ItemVistoriaActivity.class);
         startActivity(it);
+    }
+
+    public static void AtualizaLista(){
+        recyclerView.refreshDrawableState();
+        itemAdapter.notifyDataSetChanged();
     }
 }

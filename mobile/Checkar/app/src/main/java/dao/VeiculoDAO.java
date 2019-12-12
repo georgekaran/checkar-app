@@ -56,18 +56,6 @@ public class VeiculoDAO implements IDAO_T<Veiculo> {
         Cursor cur = null;
         SQLiteDatabase db = DatabaseConnection.getInstance(context).getConnection();
 
-        /*ContentValues values = new ContentValues();
-        values.put("id", 1);
-        values.put("tipo_veiculo_id", 1);
-        values.put("placa", "BRA3R52");
-        values.put("modelo", "Auto bomba tanque");
-        values.put("marca", "Mitren");
-        values.put("ano", 2016);
-        values.put("chassi", "LJCPCBLCX11000237");
-        values.put("renavam", "144003058");
-        values.put("empresa_id", 1);
-        long newRowId = db.insert(this.tabela,null, values);*/
-
         cur = db.query(this.tabela, new String[]{"id", "tipo_veiculo_id", "placa", "modelo", "marca", "ano", "chassi", "renavam", "empresa_id"}, null, null, null, null, null);
 
         if (cur != null) {
@@ -127,15 +115,17 @@ public class VeiculoDAO implements IDAO_T<Veiculo> {
 
         Cursor cur = null;
         SQLiteDatabase db = DatabaseConnection.getInstance(context).getConnection();
-        cur = db.query(this.tabela_itens, new String[]{"id_item"}, "id_veiculo = " + id, null, null, null, null);
+        cur = db.query(this.tabela_itens, new String[]{"id, id_item"}, "id_veiculo = " + id, null, null, null, null);
 
         if (cur != null) {
             if (cur.moveToFirst()) {
                 do {
                     ItemVistoria item = new ItemVistoria();
-                    item.setItem(new ItemDAO().selectId(cur.getInt(0), context));
+                    item.setId(cur.getInt(0));
+                    item.setItem(new ItemDAO().selectId(cur.getInt(1), context));
                     item.setSituacao("");
                     item.setObservacao("");
+                    item.setFoto("");
                     itens.add(item);
                 } while (cur.moveToNext());
             }
@@ -152,5 +142,11 @@ public class VeiculoDAO implements IDAO_T<Veiculo> {
         values.put("id_veiculo", idVeiculo);
         long Id = db.insert(this.tabela_itens,null, values);
         return Id + "";
+    }
+
+    public String deleteAllItemVeiculo(Context context){
+        SQLiteDatabase db = DatabaseConnection.getInstance(context).getConnection();
+        db.delete(this.tabela_itens, null, null);
+        return null;
     }
 }

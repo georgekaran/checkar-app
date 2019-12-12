@@ -42,4 +42,8 @@
     <string name="com_problemas">Com problemas</string>
     <string name="tirar_foto">Foto:</string>
     <string name="salvar">Salvar</string>
+    <string name="resumo_vist">Resumo da vistoria:</string>
+    <string name="concluir">Concluir</string>
+    <string name="qtd_it_aprovado">Itens aprovados:</string>
+    <string name="qtd_it_reprovado">Itens reprovados:</string>
 </resources>

@@ -58,8 +58,8 @@ public class VeiculoAdapter extends RecyclerView.Adapter<VeiculoAdapter.VeiculoV
 
         VeiculoViewHolder(View itemView, OnVeiculoListner onVeiculoListner) {
             super(itemView);
-            nomeView = (TextView)itemView.findViewById(R.id.tv_descricao_item_vist);
-            idadeView = (TextView)itemView.findViewById(R.id.tv_tipo_item_vist);
+            nomeView = (TextView)itemView.findViewById(R.id.tv_data_vist_item);
+            idadeView = (TextView)itemView.findViewById(R.id.tv_situacao_vist_item);
             checkView = (CheckBox)itemView.findViewById(R.id.cb_veiculo_item);
             this.onVeiculoListner = onVeiculoListner;
 

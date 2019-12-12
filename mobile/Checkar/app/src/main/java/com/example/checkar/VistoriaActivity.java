@@ -43,13 +43,6 @@ public class VistoriaActivity extends AppCompatActivity  {
 
         viewPager.setAdapter(new MyFragmentPagerAdapter(getSupportFragmentManager(), 0, getResources().getStringArray(R.array.titles_tab)));
         tabLayout.setupWithViewPager(viewPager);
-
-        int idVeiculo = Integer.parseInt(Configuracao.configGerais.lerConfig(getString(R.string.config_veiculo)));
-
-        VeiculoDAO veiculoDAO = new VeiculoDAO();
-        Veiculo veiculo = veiculoDAO.selectId(idVeiculo, this);
-        ArrayList<ItemVistoria> itensVistoria = veiculoDAO.selectItensVeiculo(idVeiculo, this);
-        this.vistoria = new Vistoria(veiculo, itensVistoria);
     }
 
 }

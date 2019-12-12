@@ -37,6 +37,14 @@ public class Vistoria {
         return data;
     }
 
+    public String getSincronizado() {
+        return sincronizado;
+    }
+
+    public void setSincronizado(String sincronizado) {
+        this.sincronizado = sincronizado;
+    }
+
     public void setData(String data) {
         this.data = data;
     }
@@ -65,7 +73,44 @@ public class Vistoria {
         this.observacao = observacao;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
+
+    public String getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(String latitude) {
+        this.latitude = latitude;
+    }
+
+    public String getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(String longitude) {
+        this.longitude = longitude;
+    }
+
+    public Vistoria() {
+
+    }
+
     public Vistoria(Veiculo veiculo, ArrayList<ItemVistoria> itensVistoria) {
+        this.id = 0;
         this.data = new SimpleDateFormat("dd/MM/yyyy").format(new Date());
         this.hora = new SimpleDateFormat("HH:mm").format(new Date());
         this.km = 0;
@@ -79,5 +124,38 @@ public class Vistoria {
 
     public void setItensVistoria(ArrayList<ItemVistoria> itensVistoria) {
         this.itensVistoria = itensVistoria;
+    }
+
+    public int qtdItensAprovados(){
+        int qtd = 0;
+        for (int i=0; i<this.itensVistoria.size(); i++){
+            if (this.itensVistoria.get(i).getSituacao().equals("S")){
+                qtd++;
+            }
+        }
+
+        return qtd;
+    }
+
+    public int qtdItensReprovados(){
+        int qtd = 0;
+        for (int i=0; i<this.itensVistoria.size(); i++){
+            if (this.itensVistoria.get(i).getSituacao().equals("C")){
+                qtd++;
+            }
+        }
+
+        return qtd;
+    }
+
+    public boolean permiteSalvar(){
+        boolean salvar = true;
+        for (int i=0; i<this.itensVistoria.size(); i++){
+            if (this.itensVistoria.get(i).getSituacao().equals("")){
+                salvar = false;
+            }
+        }
+
+        return salvar;
     }
 }

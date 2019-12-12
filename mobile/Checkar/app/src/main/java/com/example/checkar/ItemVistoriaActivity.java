@@ -15,12 +15,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
+import android.widget.Toast;
 
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import fragmentVistoria.FragmentItens;
 import model.ItemVistoria;
 
 public class ItemVistoriaActivity extends AppCompatActivity {
@@ -84,6 +86,10 @@ public class ItemVistoriaActivity extends AppCompatActivity {
                 } else if(rbComProblema.isChecked()){
                     ItemVistoriaActivity.item.setSituacao("C");
                 }
+
+                Toast.makeText(getApplicationContext(), "Item registrado!", Toast.LENGTH_SHORT).show();
+                FragmentItens.AtualizaLista();
+                finish();
             }
         });
 
