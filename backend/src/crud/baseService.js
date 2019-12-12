@@ -29,8 +29,9 @@ class BaseService {
     }
 
     beforePersist(object, type = 'SAVE') {
-        if(type === 'UPDATE') {
-            object.updated_at = new Date().toLocaleString('pt-BR', { timeZone: 'America/Belem' });
+        object.updated_at = new Date().toLocaleString('pt-BR', { timeZone: 'America/Belem' });
+        if(type === 'SAVE') {
+            object.created_at = new Date().toLocaleString('pt-BR', { timeZone: 'America/Belem' });
         }
         return object;
     }

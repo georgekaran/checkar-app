@@ -17,7 +17,7 @@ class UserService extends BasicService {
     }
 
     fields() {
-        return ['id', 'nome', 'email'];
+        return ['id', 'nome', 'email', 'empresa_id', 'tipo_usuario_id'];
     }
 }
 

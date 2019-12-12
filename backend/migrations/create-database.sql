@@ -107,7 +107,7 @@ CREATE TABLE  "tipo_item" (
 -- Table "item"
 -- -----------------------------------------------------
 CREATE TABLE  "item" (
-  "id" INT NOT NULL,
+  "id" SERIAL,
   "id_tipo_item" INT NOT NULL,
   "nome" VARCHAR(200) NOT NULL,
   "created_at" TIMESTAMP NOT NULL,
