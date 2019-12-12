@@ -12,7 +12,7 @@ import SaveIcon from '@material-ui/icons/Save';
 import { useSnackbar } from 'notistack';
 
 import Title from '../common/Title';
-import {clients, users} from '../../main/api'
+import { clients, users as usersAPI, typeUser as typeUserAPI, company as companyAPI } from '../../main/api'
 import * as Yup from "yup";
 import Form from "../form/Form";
 import Input from "../input/Input";
@@ -53,36 +53,17 @@ const useStyles = makeStyles(theme => ({
 const renderLink = React.forwardRef((props, ref) => <RouterLink innerRef={ref} {...props} />);
 
 const UserFullSchema = Yup.object().shape({
-    name: Yup.string().default('').required("Campo obrigatório."),
+    nome: Yup.string().default('').required("Campo obrigatório."),
     email: Yup.string().email("Não é um email válido.").required("Campo obrigatório."),
-    phoneNumber: Yup.string().nullable().max(45, "45 caracteres é o limite máximo para esse campo."),
-    client: Yup.number().nullable(),
-    profile: Yup.number().default(1).required("Campo obrigatório."),
-    password: Yup.string().required('Campo obrigatório.'),
-    passwordConfirmation: Yup.string()
-        .oneOf([Yup.ref('password'), null], 'Senhas precisam ser iguais.')
+    senha: Yup.string().required('Campo obrigatório.'),
+    senhaConfirmation: Yup.string()
+        .oneOf([Yup.ref('senha'), null], 'Senhas precisam ser iguais.')
 });
 
 const UserBaseInfoSchema = Yup.object().shape({
-    name: Yup.string().default('').required("Campo obrigatório."),
+    nome: Yup.string().default('').required("Campo obrigatório."),
     email: Yup.string().email("Não é um email válido.").required("Campo obrigatório."),
-    phoneNumber: Yup.string().nullable().max(45, "45 caracteres é o limite máximo para esse campo."),
-    client: Yup.number().nullable(),
-    profile: Yup.number().default(1).required("Campo obrigatório."),
 });
-
-const UserPasswordSchema = Yup.object().shape({
-    password: Yup.string().required('Campo obrigatório.'),
-    passwordConfirmation: Yup.string()
-        .oneOf([Yup.ref('password'), null], 'Senhas precisam ser iguais.')
-});
-
-const profiles = [
-    { value: 1, label: "Administrador" },
-    { value: 2, label: "Consultor" },
-    { value: 3, label: "Gestor de projetos" },
-    { value: 4, label: "Cliente" }
-];
 
 export default function UserForm(props) {
 
@@ -94,49 +75,56 @@ export default function UserForm(props) {
     const methodsUserBasicInfo = useForm({
         validationSchema: UserBaseInfoSchema
     });
-    const methodsUserPassword = useForm({
-        validationSchema: UserPasswordSchema
-    });
 
     const [stateClients, setStateClients] = useState([]);
-    const [client, setClient] = useState(null);
-    const [profile, setProfile] = useState(null);
+    const [company, setCompany] = useState(null);
+    const [companys, setCompanys] = useState([]);
+    const [typeUser, setTypeUser] = useState(null);
+    const [typesUser, setTypesUser] = useState([]);
     const classes = useStyles();
     const { enqueueSnackbar } = useSnackbar();
 
     useEffect(() => {
-        getClients();
+        fetchAll();
     }, []);
 
     useEffect(() => {
-        console.log(client);
-    }, [client])
-
-    useEffect(() => {
         if (id) {
-            users.get(id).then((res) => {
-                console.log(res);
-                console.log(stateClients);
-                setClient(stateClients.find(cli => cli.value === res.data.client));
-                setProfile(profiles.find(profi => profi.value === res.data.profile));
+            usersAPI.get(id).then((res) => {
+                setCompany(companys.find(cli => cli.value === res.data.empresa_id));
+                setTypeUser(typesUser.find(profi => profi.value === res.data.tipo_usuario_id));
                 methodsUserBasicInfo.reset(res.data)
             })
         }
-    }, [id, stateClients]);
+    }, [id, companys, typesUser]);
 
-    function getClients() {
-        clients.list().then(resp => {
-            const clientsSelect = resp.data.map(client => {
-                return { value: client.id, label: client.tradingName }
+    function fetchAll() {
+        companyAPI.get().then(resp => {
+            const companySelect = resp.data.map(comp => {
+                return { value: comp.id, label: comp.nome }
             });
-            setStateClients(clientsSelect);
+            setCompanys(companySelect);
+            if (companySelect.length !== 0) {
+                setCompany(companySelect[0])
+            }
+        })
+        typeUserAPI.get().then(resp => {
+            const typeUserSelect = resp.data.map(tu => {
+                return { value: tu.id, label: tu.tipo_usuario }
+            });
+            setTypesUser(typeUserSelect);
+            if (typeUserSelect.length !== 0) {
+                setTypeUser(typeUserSelect[0])
+            }
         })
     }
 
     const handleSave = values => {
         console.log(values);
-        let newValues = Object.assign(values, client && { client: {id: client.value} }, { profile: {id: profile.value} });
-        users.save(id, newValues).then((res) => {
+        let newValues = Object.assign(values, company && { empresa_id: company.value }, { tipo_usuario_id: typeUser.value });
+        delete newValues.senhaConfirmation;
+        console.log(newValues);
+        usersAPI.save(id, newValues).then((res) => {
             enqueueSnackbar('Usuário criado/atualizado com sucesso.', { variant: 'success' });
         }).catch((err) => {
             enqueueSnackbar('Falha ao criar/atualizar usuário.' + err.response.data.errors[0].message, { variant: 'error' });
@@ -145,7 +133,7 @@ export default function UserForm(props) {
 
     const handleChangePassword = values => {
         console.log(values);
-        users.updatePassword(id, values).then((res) => {
+        usersAPI.updatePassword(id, values).then((res) => {
             enqueueSnackbar('Senha alterada com sucesso!', { variant: 'success' });
         }).catch((err) => {
             enqueueSnackbar('Erro ao atualizar senhas! ', { variant: 'error' });
@@ -169,62 +157,58 @@ export default function UserForm(props) {
                     <Form onSubmit={handleSave} methods={id ? methodsUserBasicInfo : methodsUserFull}>
                         <Grid container spacing={2}>
                             <Grid container item xs={12}>
-                                <Input name="name"
+                                <Input name="nome"
                                        label="Nome" />
                             </Grid>
 
-                            <Grid container item xs={6}>
+                            <Grid container item xs={12}>
                                 <Input name="email"
                                        label="E-mail" />
                             </Grid>
 
-                            <Grid container item xs={6}>
-                                <Input name="phoneNumber"
-                                       label="Telefone" />
-                            </Grid>
-
                             <Grid item xs={6}>
                                 <Autocomplete
-                                    options={stateClients}
+                                    options={companys}
                                     getOptionLabel={option => option.label}
-                                    value={client}
+                                    disableClearable
+                                    value={company}
                                     onChange={(event, newValue) => {
-                                        setClient(newValue);
+                                        setCompany(newValue);
                                     }}
                                     renderInput={params => (
-                                        <TextField {...params} className={classes.textField} label="Cliente" fullWidth />
+                                        <TextField {...params} className={classes.textField} label="Empresa" fullWidth />
                                     )}
                                 />
                             </Grid>
 
                             <Grid item xs={6}>
                                 <Autocomplete
-                                    options={profiles}
+                                    options={typesUser}
                                     getOptionLabel={option => option.label}
-                                    value={profile}
+                                    disableClearable
+                                    value={typeUser}
                                     onChange={(event, newValue) => {
-                                        setProfile(newValue);
+                                        setTypeUser(newValue);
                                     }}
                                     renderInput={params => (
-                                        <TextField {...params} className={classes.textField} label="Perfil de usuário" fullWidth />
+                                        <TextField  {...params}
+                                                    className={classes.textField} 
+                                                    label="Perfil de usuário" 
+                                                    fullWidth />
                                     )}
                                 />
+                            </Grid> 
+                            <Grid container item xs={12}>
+                                <Input  name="senha"
+                                        type="password"
+                                        label="Senha" />
                             </Grid>
 
-                            {!id &&
-                            <>
-                                <Grid container item xs={12}>
-                                    <Input name="password"
-                                           type="password"
-                                           label="Senha" />
-                                </Grid>
-
-                                <Grid container item xs={12}>
-                                    <Input name="passwordConfirmation"
-                                           type="password"
-                                           label="Confirmar senha" />
-                                </Grid>
-                            </>}
+                            <Grid container item xs={12}>
+                                <Input  name="senhaConfirmation"
+                                        type="password"
+                                        label="Confirmar senha" />
+                            </Grid>
                         </Grid>
 
                         <Box display="flex" p={1} bgcolor="background.paper" justifyContent="flex-end">
@@ -241,40 +225,6 @@ export default function UserForm(props) {
                         </Box>
                     </Form>
                 </Paper>
-
-                {id && <Paper className={classes.paper}>
-
-                    <Title>{id ? 'Alterar senha' : 'Senha'}</Title>
-
-                    <Form onSubmit={handleChangePassword} methods={methodsUserPassword}>
-                        <Grid container spacing={2}>
-                            <Grid container item xs={12}>
-                                <Input name="password"
-                                       type="password"
-                                       label="Senha" />
-                            </Grid>
-
-                            <Grid container item xs={12}>
-                                <Input name="passwordConfirmation"
-                                       type="password"
-                                       label="Confirmar senha" />
-                            </Grid>
-                        </Grid>
-
-                        <Box display="flex" p={1} bgcolor="background.paper" justifyContent="flex-end">
-                            <Button
-                                type="submit"
-                                variant="contained"
-                                color="primary"
-                                size="small"
-                                className={classes.button}
-                                startIcon={<SaveIcon />}
-                            >
-                                Salvar Senha
-                            </Button>
-                        </Box>
-                    </Form>
-                </Paper>}
             </Grid>
 
         </Container>

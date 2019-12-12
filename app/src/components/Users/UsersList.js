@@ -52,14 +52,14 @@ export default function UsersList() {
 
     useEffect(() => {
         usersApi.get().then((res) => {
-            setUsers(res.data.content)
+            setUsers(res.data)
         });
     }, []);
 
     const handleDelete = (user) => {
         showConfirmDialog({
             title: 'Deletar',
-            message: `Você gostaria de deletar o usuário ${user.name}?`,
+            message: `Você gostaria de deletar o usuário ${user.nome}?`,
             confirmLabel: 'Sim',
             cancelLabel: 'Não',
             confirmCallback: () => {
@@ -72,24 +72,6 @@ export default function UsersList() {
             }
         });
     }
-
-    const handleActiveCheckBoxChange = (user) => {
-        showConfirmDialog({
-            title: 'Status',
-            message: `Você gostaria de ${!user.active ? 'ativar' : 'desativar'} o usuário ${user.name}?`,
-            confirmLabel: 'Sim',
-            cancelLabel: 'Não',
-            confirmCallback: () => {
-                usersApi.updateActive(user.id).then((res) => {
-                    enqueueSnackbar('Usuário alterado com sucesso.', { variant: 'success' });
-                    const tempUsers = users.map(u => u.id === user.id ? { ...user, active: !user.active } : u);
-                    setUsers(tempUsers);
-                }).catch(e => {
-                    enqueueSnackbar('Erro ao alterar status do usuário.', { variant: 'error' });
-                });
-            }
-        });
-    };
 
     return (
         <Container maxWidth="lg" className={classes.container}>
@@ -109,8 +91,7 @@ export default function UsersList() {
                                 <TableCell>ID</TableCell>
                                 <TableCell>Nome</TableCell>
                                 <TableCell>E-mail</TableCell>
-                                <TableCell>Último login</TableCell>
-                                <TableCell>Ativo</TableCell>
+                                <TableCell>Último update</TableCell>
                                 <TableCell>Ações</TableCell>
                             </TableRow>
                         </TableHead>
@@ -118,13 +99,9 @@ export default function UsersList() {
                             {users.map(user => (
                                 <TableRow key={user.id}>
                                     <TableCell>{user.id}</TableCell>
-                                    <TableCell>{user.name}</TableCell>
+                                    <TableCell>{user.nome}</TableCell>
                                     <TableCell>{user.email}</TableCell>
-                                    <TableCell>{user.lastLogin ? moment(user.lastLogin).locale("pt_BR").format("DD/MM/YYYY HH:mm") : "Sem registro"}</TableCell>
-                                    <TableCell>
-                                        <Checkbox checked={user.active}
-                                                  onChange={() => handleActiveCheckBoxChange(user)} />
-                                    </TableCell>
+                                    <TableCell>{user.updated_at ? moment(user.updated_at).locale("pt_BR").format("DD/MM/YYYY HH:mm") : "Sem registro"}</TableCell>
                                     <TableCell>
                                         <IconButton aria-label="edit" size="small" component={renderLink} to={'/users/' + user.id}>
                                             <CreateIcon fontSize="inherit" />

@@ -29,20 +29,20 @@ api.interceptors.response.use(function (response) {
 
 export const users = {
 
-  list: () => api.get('api/users'),
+  list: () => api.get('user'),
 
-  get: (id) => api.get('api/users' + (id ? `/${id}` : '')),
+  get: (id) => api.get('user' + (id ? `/${id}` : '')),
 
-  updatePassword: (id, data) => api.put(`api/users/password/${id}`, data),
+  updatePassword: (id, data) => api.put(`user/password/${id}`, data),
 
-  updateActive: (id) => api.put(`api/users/active/${id}`),
+  updateActive: (id) => api.put(`user/active/${id}`),
 
-  delete: (id) => api.delete(`api/users/${id}`),
+  delete: (id) => api.delete(`user/${id}`),
 
   save: (id, data) => {
     return api({
       method: id ? 'PUT' : 'POST',
-      url: id ? `api/users/${id}` : 'api/users',
+      url: id ? `user/${id}` : 'user',
       data
     })
   }
