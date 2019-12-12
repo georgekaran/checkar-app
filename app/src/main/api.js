@@ -89,6 +89,60 @@ export const company = {
 
 }
 
+export const typeVehicle = {
+
+  list: () => api.get('/vehicle/type'),
+
+  get: (id) => api.get('/vehicle/type' + (id ? `/${id}` : '')),
+
+  delete: (id) => api.delete(`/vehicle/type/${id}`),
+
+  save: (id, data) => {
+    return api({
+      method: id ? 'PUT' : 'POST',
+      url: id ? `vehicle/type/${id}` : 'vehicle/type',
+      data
+    })
+  }
+
+}
+
+export const typeItem = {
+
+  list: () => api.get('/item/type'),
+
+  get: (id) => api.get('/item/type' + (id ? `/${id}` : '')),
+
+  delete: (id) => api.delete(`/item/type/${id}`),
+
+  save: (id, data) => {
+    return api({
+      method: id ? 'PUT' : 'POST',
+      url: id ? `item/type/${id}` : 'item/type',
+      data
+    })
+  }
+
+}
+
+export const item = {
+
+  list: () => api.get('/item'),
+
+  get: (id) => api.get('/item' + (id ? `/${id}` : '')),
+
+  delete: (id) => api.delete(`/item/${id}`),
+
+  save: (id, data) => {
+    return api({
+      method: id ? 'PUT' : 'POST',
+      url: id ? `item/${id}` : 'item',
+      data
+    })
+  }
+
+}
+
 export const typeUser = {
 
   list: () => api.get('/user/type'),

@@ -24,6 +24,15 @@ import CompanyList from '../components/Company/CompanyList';
 import TypeUserForm from '../components/TypeUser/TypeUserForm';
 import TypeUserList from '../components/TypeUser/TypeUserList';
 
+import TypeVehicleForm from '../components/TypeVehicle/TypeVehicleForm';
+import TypeVehicleList from '../components/TypeVehicle/TypeVehicleList';
+
+import TypeItemForm from '../components/TypeItem/TypeItemForm';
+import TypeItemList from '../components/TypeItem/TypeItemList';
+
+import ItemForm from '../components/Item/ItemForm';
+import ItemList from '../components/Item/ItemList';
+
 export default () => (
     <Router>
         <Main>
@@ -38,6 +47,18 @@ export default () => (
                 <Route path="/typesUser/create" component={TypeUserForm} />
                 <Route path="/typesUser/:id" component={TypeUserForm} />
                 <Route path="/typesUser" component={TypeUserList} />
+
+                <Route path="/typesVehicle/create" component={TypeVehicleForm} />
+                <Route path="/typesVehicle/:id" component={TypeVehicleForm} />
+                <Route path="/typesVehicle" component={TypeVehicleList} />
+
+                <Route path="/typesItem/create" component={TypeItemForm} />
+                <Route path="/typesItem/:id" component={TypeItemForm} />
+                <Route path="/typesItem" component={TypeItemList} />
+
+                <Route path="/items/create" component={ItemForm} />
+                <Route path="/items/:id" component={ItemForm} />
+                <Route path="/items" component={ItemList} />
 
                 <Route path="/users/create" component={UserForm} />
                 <Route path="/users/:id" component={UserForm} />

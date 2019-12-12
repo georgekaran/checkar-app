@@ -32,6 +32,21 @@ const items = [
     icon: 'folder',
     name: 'Perfis',
   },
+  {
+    url: '/typesVehicle',
+    icon: 'folder',
+    name: 'Tipos de veículos',
+  },
+  {
+    url: '/typesItem',
+    icon: 'folder',
+    name: 'Tipos de items',
+  },
+  {
+    url: '/items',
+    icon: 'folder',
+    name: 'Items',
+  },
 ]
 
 export const mainListItems = (
