@@ -47,6 +47,11 @@ const items = [
     icon: 'folder',
     name: 'Items',
   },
+  {
+    url: '/vehicles',
+    icon: 'folder',
+    name: 'Veículos',
+  },
 ]
 
 export const mainListItems = (

@@ -33,6 +33,9 @@ import TypeItemList from '../components/TypeItem/TypeItemList';
 import ItemForm from '../components/Item/ItemForm';
 import ItemList from '../components/Item/ItemList';
 
+import VehicleForm from '../components/Vehicle/VehicleForm';
+import VehicleList from '../components/Vehicle/VehicleList';
+
 export default () => (
     <Router>
         <Main>
@@ -43,6 +46,10 @@ export default () => (
                 <Route path="/projects/create" component={CreateProject} />
                 <Route path="/projects/:id" component={ProjectDashboard} />
                 <Route path="/projects" component={BrowseProjects} />
+
+                <Route path="/vehicles/create" component={VehicleForm} />
+                <Route path="/vehicles/:id" component={VehicleForm} />
+                <Route path="/vehicles" component={VehicleList} />
 
                 <Route path="/typesUser/create" component={TypeUserForm} />
                 <Route path="/typesUser/:id" component={TypeUserForm} />
