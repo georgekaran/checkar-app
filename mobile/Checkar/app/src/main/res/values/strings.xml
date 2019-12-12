@@ -46,4 +46,6 @@
     <string name="concluir">Concluir</string>
     <string name="qtd_it_aprovado">Itens aprovados:</string>
     <string name="qtd_it_reprovado">Itens reprovados:</string>
+    <string name="localizacao">Localização:</string>
+    <string name="buscar">Buscar</string>
 </resources>

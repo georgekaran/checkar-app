@@ -74,7 +74,7 @@ public class DownloadDados extends AsyncTask<Void, Void, String> {
         queue.add(baixarItem());
         queue.add(baixarItemVeiculo());
 
-        ArrayList<Vistoria> vistorias = new VistoriaDAO().selectAll(context);
+        ArrayList<Vistoria> vistorias = new VistoriaDAO().selectEnvio(context);
         for (int i = 0; i < vistorias.size(); i++) {
             try {
                 queue.add(enviarVistorias(vistorias.get(i)));
@@ -335,7 +335,7 @@ public class DownloadDados extends AsyncTask<Void, Void, String> {
 
     }
 
-    public JsonObjectRequest enviarVistorias(Vistoria vistoria) throws JSONException {
+    public JsonObjectRequest enviarVistorias(final Vistoria vistoria) throws JSONException {
 
         String url = "http://10.0.2.2:5000/inspection";
 
@@ -358,6 +358,14 @@ public class DownloadDados extends AsyncTask<Void, Void, String> {
                     @Override
                     public void onResponse(JSONObject response) {
                         Log.d("JSONPost", response.toString());
+
+                        try {
+                            if (response.get("message").toString().equals("Create successfully")){
+                                new VistoriaDAO().updateSincronizado(vistoria.getId(), context);
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
                     }
                 }, new Response.ErrorListener() {
 

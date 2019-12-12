@@ -53,6 +53,16 @@ public class VistoriaDAO implements IDAO_T<Vistoria> {
         return null;
     }
 
+    public String updateSincronizado(int id, Context context) {
+        SQLiteDatabase db = DatabaseConnection.getInstance(context).getConnection();
+
+        ContentValues values = new ContentValues();
+        values.put("sincronizado", "T");
+
+        db.update(this.tabela, values, "id = " + id, null);
+        return null;
+    }
+
     @Override
     public String delete(int id, Context context) {
         SQLiteDatabase db = DatabaseConnection.getInstance(context).getConnection();
@@ -69,6 +79,37 @@ public class VistoriaDAO implements IDAO_T<Vistoria> {
         SQLiteDatabase db = DatabaseConnection.getInstance(context).getConnection();
 
         cur = db.query(this.tabela, new String[]{"id", "id_usuario", "id_veiculo", "data", "hora", "km", "sincronizado", "observacao", "latitude", "longitude"}, null, null, null, null, null);
+
+        if (cur != null) {
+            if (cur.moveToFirst()) {
+                do {
+                    Vistoria vistoria = new Vistoria();
+                    vistoria.setId(cur.getInt(0));
+                    vistoria.setUsuario(new UserDAO().selectId(cur.getInt(1), context));
+                    vistoria.setVeiculo(new VeiculoDAO().selectId(cur.getInt(2), context));
+                    vistoria.setData(cur.getString(3));
+                    vistoria.setHora(cur.getString(4));
+                    vistoria.setKm(cur.getInt(5));
+                    vistoria.setSincronizado(cur.getString(6));
+                    vistoria.setObservacao(cur.getString(7));
+                    vistoria.setLatitude(cur.getString(8));
+                    vistoria.setLongitude(cur.getString(9));
+
+                    vistoria.setItensVistoria(this.selectAllItemVistoria(cur.getInt(0), context));
+                    vistorias.add(vistoria);
+                } while (cur.moveToNext());
+            }
+        }
+
+        return vistorias;
+    }
+
+    public ArrayList<Vistoria> selectEnvio(Context context) {
+        ArrayList<Vistoria> vistorias = new ArrayList();
+        Cursor cur = null;
+        SQLiteDatabase db = DatabaseConnection.getInstance(context).getConnection();
+
+        cur = db.query(this.tabela, new String[]{"id", "id_usuario", "id_veiculo", "data", "hora", "km", "sincronizado", "observacao", "latitude", "longitude"}, "sincronizado <> 'T'", null, null, null, null);
 
         if (cur != null) {
             if (cur.moveToFirst()) {
@@ -135,4 +176,5 @@ public class VistoriaDAO implements IDAO_T<Vistoria> {
 
         return itens;
     }
+
 }

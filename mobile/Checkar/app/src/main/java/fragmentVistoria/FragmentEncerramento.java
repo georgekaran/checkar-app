@@ -1,5 +1,9 @@
 package fragmentVistoria;
 
+import android.Manifest;
+import android.content.Context;
+import android.content.pm.PackageManager;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +14,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 
 import com.example.checkar.MenuActivity;
@@ -23,6 +28,7 @@ public class FragmentEncerramento extends Fragment {
     private EditText etQtdItensReprovados = null;
     private EditText etQtdItensAprovados = null;
     private Button btConcluir = null;
+    private Button btBuscar = null;
 
     @Nullable
     @Override
@@ -34,6 +40,7 @@ public class FragmentEncerramento extends Fragment {
         etQtdItensAprovados = (EditText) view.findViewById(R.id.et_itens_aprov);
         etQtdItensReprovados = (EditText) view.findViewById(R.id.et_itens_reprov);
         btConcluir = (Button) view.findViewById(R.id.bt_concluir_vist);
+        btBuscar = (Button) view.findViewById(R.id.bt_buscar);
 
         etObservacoes.setText(VistoriaActivity.vistoria.getObservacao());
         etQtdItensAprovados.setText(VistoriaActivity.vistoria.qtdItensAprovados() + "");
@@ -57,6 +64,13 @@ public class FragmentEncerramento extends Fragment {
                 } else {
                     Toast.makeText(getContext(), "Vistoria não esta completa!", Toast.LENGTH_LONG).show();
                 }
+            }
+        });
+
+        btBuscar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                VistoriaActivity.salvarLocal = true;
             }
         });
 
