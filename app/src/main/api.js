@@ -143,6 +143,24 @@ export const item = {
 
 }
 
+export const vehicleItem = {
+
+  list: () => api.get('/vehicle/item'),
+
+  get: (id) => api.get('/vehicle/item' + (id ? `/${id}` : '')),
+
+  delete: (id) => api.delete(`/vehicle/item/${id}`),
+
+  save: (id, data) => {
+    return api({
+      method: id ? 'PUT' : 'POST',
+      url: id ? `vehicle/item/${id}` : 'vehicle/item',
+      data
+    })
+  }
+
+}
+
 export const vehicle = {
 
   list: () => api.get('/vehicle'),

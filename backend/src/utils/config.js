@@ -18,7 +18,7 @@ const Config = {
         'USER': DB_USER || 'postgres',
         'HOST': DB_HOST || 'localhost',
         'NAME': DB_NAME || 'checkcar_app',
-        'PASSWORD': DB_PASSWORD || 'postgres',
+        'PASSWORD': DB_PASSWORD || 'george',
         'PORT': DB_PORT || 5432,
     },
 };

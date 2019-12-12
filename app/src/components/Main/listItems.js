@@ -13,16 +13,6 @@ const items = [
     name: 'Usuários',
   },
   {
-    url: '/clients',
-    icon: 'account_circle',
-    name: 'Clientes',
-  },
-  {
-    url: '/projects',
-    icon: 'folder',
-    name: 'Projetos',
-  },
-  {
     url: '/companys',
     icon: 'folder',
     name: 'Empresas',

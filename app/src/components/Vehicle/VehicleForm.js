@@ -9,16 +9,20 @@ import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import { Link as RouterLink } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
 import SaveIcon from '@material-ui/icons/Save';
+import FormGroup from '@material-ui/core/FormGroup';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
 import { useSnackbar } from 'notistack';
 
 import Title from '../common/Title';
-import { vehicle as vehicleAPI, typeVehicle as typeVehicleAPI, company as companyAPI } from '../../main/api'
+import { vehicle as vehicleAPI, typeVehicle as typeVehicleAPI, company as companyAPI, item as itemAPI, vehicleItem as vehicleItemAPI } from '../../main/api'
 import * as Yup from "yup";
 import Form from "../form/Form";
 import Input from "../input/Input";
 import useForm from "react-hook-form";
 import TextField from "@material-ui/core/TextField";
 import Autocomplete from "@material-ui/lab/Autocomplete/Autocomplete";
+import CheckboxHook from '../input/CheckBox';
+import Checkbox from '@material-ui/core/Checkbox';
 
 const useStyles = makeStyles(theme => ({
     paper: {
@@ -74,6 +78,10 @@ export default function UserForm(props) {
     const [companys, setCompanys] = useState([]);
     const [typeVehicle, setTypeVehicle] = useState(null);
     const [typesVehicle, setTypesVehicle] = useState([]);
+
+    const [items, setItems] = useState([])
+    const [selectedItems, setSelectedItems] = useState([])
+
     const classes = useStyles();
     const { enqueueSnackbar } = useSnackbar();
 
@@ -110,6 +118,18 @@ export default function UserForm(props) {
                 setTypeVehicle(typesVehicleSelect[0])
             }
         })
+        itemAPI.get().then(resp => {
+            const itemsSelect = resp.data.map(tu => {
+                return { value: tu.id, label: tu.nome }
+            });
+            setItems(itemsSelect);
+        })
+        if (id) {
+            vehicleItemAPI.get().then(resp => {
+                const itemsSelect = resp.data.filter(tu => tu.id_veiculo == id);
+                setSelectedItems(itemsSelect.map(i => i.id));
+            })
+        }
     }
 
     const handleSave = values => {
@@ -123,6 +143,26 @@ export default function UserForm(props) {
             enqueueSnackbar('Falha ao criar/atualizar veículo.' + err.response.data.errors[0].message, { variant: 'error' });
         })
     };
+
+    const handleCheckBoxChange = value => {
+        if (selectedItems.find(i => i == value)) {
+            setSelectedItems(selectedItems.filter(i => i != value));
+        } else {
+            setSelectedItems([ ...selectedItems, value ]);
+        }
+      };
+
+      const handleSaveItems = (e) => {
+          e.preventDefault();
+          const itemsVehicle = selectedItems.map(i => { return { id_item: i, id_veiculo: id } });
+          itemsVehicle.forEach(iv => {
+            vehicleItemAPI.save(null, iv).then((res) => {
+                enqueueSnackbar('Item criado/atualizado com sucesso.', { variant: 'success' });
+            }).catch((err) => {
+                enqueueSnackbar('Falha ao criar/atualizar item.' + err.response.data.errors[0].message, { variant: 'error' });
+            })
+          })
+      }
 
     return (
         <Container maxWidth="lg" className={classes.container}>
@@ -219,6 +259,41 @@ export default function UserForm(props) {
                         </Box>
                     </Form>
                 </Paper>
+
+                {id &&<Paper className={classes.paper}>
+
+                    <Title>Items</Title>
+
+                    <form onSubmit={handleSaveItems}>
+                        <Grid container spacing={2}>
+                            {items.length !== 0 && items.map(i => (
+                                <Grid container item xs={12}>
+                                    <FormControlLabel
+                                        control={
+                                            <Checkbox checked={selectedItems.length != 0 ? selectedItems.filter(it => it === i.value).length != 0 : false} 
+                                                        onChange={(e) => handleCheckBoxChange(i.value)} 
+                                                        value={i.value} />
+                                        }
+                                        label={i.label}
+                                    />
+                                </Grid>
+                            ))}
+                        </Grid>
+
+                        <Box display="flex" p={1} bgcolor="background.paper" justifyContent="flex-end">
+                            <Button
+                                type="submit"
+                                variant="contained"
+                                color="primary"
+                                size="small"
+                                className={classes.button}
+                                startIcon={<SaveIcon />}
+                            >
+                                Salvar Items
+                            </Button>
+                        </Box>
+                    </form>
+                </Paper>}
             </Grid>
 
         </Container>
