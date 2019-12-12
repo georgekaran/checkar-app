@@ -28,7 +28,7 @@
 - [GET] `/:id` - Get register by object id
 - [POST] `/` - Create an object
 - [PUT] `/:id` - Update register by object id
-- [DELETE] `/`:id - Delete register by object id
+- [DELETE] `/:id` - Delete register by object id
 
 All the next endpoints has the same basic structure for a basic CRUD operation:
 
