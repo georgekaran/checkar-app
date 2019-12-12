@@ -8,11 +8,14 @@ import android.database.sqlite.SQLiteDatabase;
 import java.util.ArrayList;
 
 import db.DatabaseConnection;
+import model.Item;
+import model.ItemVistoria;
 import model.Usuario;
 import model.Veiculo;
 
 public class VeiculoDAO implements IDAO_T<Veiculo> {
     private String tabela = "veiculo";
+    private String tabela_itens = "veiculo_item";
 
     @Override
     public String save(Veiculo o, Context context) {
@@ -41,8 +44,14 @@ public class VeiculoDAO implements IDAO_T<Veiculo> {
         return null;
     }
 
+    public String deleteAll(Context context){
+        SQLiteDatabase db = DatabaseConnection.getInstance(context).getConnection();
+        db.delete(this.tabela, null, null);
+        return null;
+    }
+
     @Override
-    public ArrayList selectAll(Context context) {
+    public ArrayList<Veiculo> selectAll(Context context) {
         ArrayList<Veiculo> veiculos = new ArrayList();
         Cursor cur = null;
         SQLiteDatabase db = DatabaseConnection.getInstance(context).getConnection();
@@ -113,21 +122,35 @@ public class VeiculoDAO implements IDAO_T<Veiculo> {
         return veiculo;
     }
 
-    public ArrayList selectAllString(Context context) {
-        ArrayList<String> veiculos = new ArrayList();
+    public ArrayList<ItemVistoria> selectItensVeiculo(int id, Context context){
+        ArrayList<ItemVistoria> itens = new ArrayList<ItemVistoria>();
+
         Cursor cur = null;
         SQLiteDatabase db = DatabaseConnection.getInstance(context).getConnection();
-
-        cur = db.query(this.tabela, new String[]{"placa", "modelo", "marca"}, null, null, null, null, null);
+        cur = db.query(this.tabela_itens, new String[]{"id_item"}, "id_veiculo = " + id, null, null, null, null);
 
         if (cur != null) {
             if (cur.moveToFirst()) {
                 do {
-                    veiculos.add(cur.getString(1) + " " + cur.getString(2));
+                    ItemVistoria item = new ItemVistoria();
+                    item.setItem(new ItemDAO().selectId(cur.getInt(0), context));
+                    item.setSituacao("");
+                    item.setObservacao("");
+                    itens.add(item);
                 } while (cur.moveToNext());
             }
         }
 
-        return veiculos;
+        return itens;
+    }
+
+    public String saveItemVeiculo(int id, int idItem, int idVeiculo, Context context) {
+        SQLiteDatabase db = DatabaseConnection.getInstance(context).getConnection();
+        ContentValues values = new ContentValues();
+        values.put("id", id);
+        values.put("id_item", idItem);
+        values.put("id_veiculo", idVeiculo);
+        long Id = db.insert(this.tabela_itens,null, values);
+        return Id + "";
     }
 }

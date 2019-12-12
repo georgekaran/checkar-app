@@ -11,6 +11,8 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import dao.UserDAO;
+import dao.VeiculoDAO;
+import model.AutenticarUsu;
 import model.Configuracao;
 import model.Usuario;
 
@@ -24,6 +26,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        setTitle("Login");
 
         etEmail = (EditText) findViewById(R.id.et_email);
         etSenha = (EditText) findViewById(R.id.et_senha);
@@ -63,8 +66,18 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             UserDAO userDAO = new UserDAO();
             Usuario user = userDAO.login(this, email, senha);
 
+            AutenticarUsu.autenticarUsuario(email, senha, this);
+
             if (user!=null) {
-                // Entra no app
+                if (cbLembrar.isChecked()){
+                    Configuracao.configGerais.salvarConfig(getString(R.string.config_email), etEmail.getText().toString());
+                    Configuracao.configGerais.salvarConfig(getString(R.string.config_senha), etSenha.getText().toString());
+                    Configuracao.configGerais.salvarConfig(getString(R.string.config_lembrar), cbLembrar.isChecked()?"T":"F");
+                }
+
+                Intent intent= new Intent(LoginActivity.this, MenuActivity.class);
+                intent.setAction(Intent.ACTION_VIEW); // opcional
+                startActivity(intent);
             } else {
                 Toast toast = Toast.makeText(this, "Verifique as informações do usuário!", Toast.LENGTH_LONG);
                 toast.show();

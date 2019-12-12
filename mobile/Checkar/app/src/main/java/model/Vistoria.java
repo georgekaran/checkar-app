@@ -65,10 +65,19 @@ public class Vistoria {
         this.observacao = observacao;
     }
 
-    public Vistoria(Veiculo veiculo) {
+    public Vistoria(Veiculo veiculo, ArrayList<ItemVistoria> itensVistoria) {
         this.data = new SimpleDateFormat("dd/MM/yyyy").format(new Date());
         this.hora = new SimpleDateFormat("HH:mm").format(new Date());
         this.km = 0;
         this.veiculo = veiculo;
+        this.itensVistoria = itensVistoria;
+    }
+
+    public ArrayList<ItemVistoria> getItensVistoria() {
+        return itensVistoria;
+    }
+
+    public void setItensVistoria(ArrayList<ItemVistoria> itensVistoria) {
+        this.itensVistoria = itensVistoria;
     }
 }

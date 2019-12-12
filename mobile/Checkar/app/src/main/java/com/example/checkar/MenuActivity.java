@@ -1,11 +1,13 @@
 package com.example.checkar;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -21,6 +23,8 @@ import AdapterList.VeiculoAdapter;
 import AdapterList.VistoriaAdapter;
 import dao.VeiculoDAO;
 import dao.VistoriaDAO;
+import model.Configuracao;
+import model.DownloadDados;
 import model.Vistoria;
 
 public class MenuActivity extends AppCompatActivity {
@@ -28,6 +32,7 @@ public class MenuActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
+        setTitle("Vistorias");
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -36,10 +41,13 @@ public class MenuActivity extends AppCompatActivity {
         btNovaVistoria.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG).setAction("Action", null).show();
-                Intent intent= new Intent(MenuActivity.this, VistoriaActivity.class);
-                intent.setAction(Intent.ACTION_VIEW); // opcional
-                startActivity(intent);
+                if(Configuracao.configGerais.lerConfig(getString(R.string.config_veiculo)).equals("")){
+                    AlertarConfgVeiculo();
+                } else {
+                    Intent intent = new Intent(MenuActivity.this, VistoriaActivity.class);
+                    intent.setAction(Intent.ACTION_VIEW); // opcional
+                    startActivity(intent);
+                }
             }
         });
 
@@ -56,8 +64,8 @@ public class MenuActivity extends AppCompatActivity {
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         rv.setLayoutManager(llm);
 
-        VistoriaAdapter vistoriaAdapter = new VistoriaAdapter(new VistoriaDAO().selectAll(this));
-        rv.setAdapter(vistoriaAdapter);
+        /*VistoriaAdapter vistoriaAdapter = new VistoriaAdapter(new VistoriaDAO().selectAll(this));
+        rv.setAdapter(vistoriaAdapter);*/
     }
 
     @Override
@@ -79,19 +87,19 @@ public class MenuActivity extends AppCompatActivity {
 
         if (idItem == R.id.acao_sincronizar){
             Toast.makeText(getApplicationContext(), "Sincronizar selecionada", Toast.LENGTH_LONG).show();
-
-
-
-
-
-
-
-
-
-
+            new DownloadDados(this).execute();
             return true;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void AlertarConfgVeiculo(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Atenção!");
+        builder.setMessage("Nenhum veículo selecionado.");        // add a button
+        builder.setPositiveButton("OK", null);        // create and show the alert dialog
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 }
