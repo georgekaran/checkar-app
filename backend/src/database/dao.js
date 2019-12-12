@@ -20,7 +20,7 @@ class DAO {
 
     static insert({table = '', values = {}}, cb) {
         const query = {
-            text: `INSERT INTO ${table} ${join(getFields(values))} VALUES ${getInsertValues(values)}`,
+            text: `INSERT INTO ${table} ${join(getFields(values))} VALUES ${getInsertValues(values)} RETURNING id`,
             values: Object.values(values)
         };
         db.executeQuery(query, (result) => cb(result && result[0]));
